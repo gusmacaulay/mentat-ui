@@ -8,16 +8,7 @@ export const urb = stream();
 export const TheShip = stream(window.ship);
 export const TheSigil = stream("");
 
-export const TheGame = stream({
-                                title: '',
-                                url: '',
-                                bundle: null,
-                                bundleURL: '',
-                                ci: null,
-                                saveBundle: null,
-                                saveBundleURL: ''
-                              })
-
+export const botID = stream("");
 
 // To allow msgBox to be used with Urbit callbacks
 export const msgBoxCallback = stream({

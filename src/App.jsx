@@ -2,9 +2,13 @@ import m from 'mithril';
 import stream from 'mithril/stream';
 import Urbit from '@urbit/http-api';
 
-import { urb, TheGame } from './allStreams';
+import { urb, botID } from './allStreams';
 import { popupBox } from './popupBox';
 import { adminView } from './adminView';
+
+import { scryUrbit, pokeUrbit } from './urbitFunctions';
+
+const botsArray = stream([]) 
 
 var showPopupBox = false;
 
@@ -25,8 +29,18 @@ function App(initialVnode) {
     showPopupBox = false;
   }
 
+  const body = () => {return (
+    <a>Each bot will run as a separate %gato thread, with its own models, chat history, and context windows.</a>
+  )}
+
   return {
-    oninit: () => {},  
+    oninit: () => {
+      scryUrbit('get-bots-set.json').then((value) => {
+        botsArray(value['get-bots-set'])
+        // set initial bot view
+        botID(botsArray()[0]);
+      });
+    },  
     onupdate: () => {},  
     oncreate: () => {},
     onremove: () => {},
@@ -36,33 +50,43 @@ function App(initialVnode) {
         <main className="main">
           <div id="header-container">
             <h2 id="admin-heading">%mentat admin</h2>
-              <div class="dropdown">
+            <div class="dropdown">
               <button class="dropbtn">︙</button>
-              <div class="dropdown-content">
+              <div id="viewSelector" class="dropdown-content">
                 <a onclick={() => {viewType('model')}}>Models</a>
                 <a onclick={() => {viewType('compendium')}}>Compendium</a>
                 <a onclick={() => {viewType('context')}}>Context</a>
               </div>
-            </div> 
+            </div>
+            <div class="dropdown">
+              <button class="dropbtn">bot</button>
+              <div id="botSelector" class="dropdown-content">
+                {botsArray().map((el) => {return (
+                  <a onclick={() => {botID(el)}}>{el}</a>
+                )})}
+                <hr></hr>
+                <a onclick={() => {showPopupBox = (showPopupBox) ? false : true}}>Make a new bot</a>
+              </div>
+            </div>
           </div>
           <div id="body-container">
-            {m(adminView, {viewType: viewType()})}
+            {m(adminView, {viewType: viewType(), botID: botID()})}
           </div>
+          <div>
+            {m(popupBox, {
+                 open: showPopupBox, 
+                 heading: "Bot Setup", 
+                 body: body,
+                 init: popupBoxInit,
+                 cancelText: "Cancel", 
+                 confirmText: "Confirm", 
+                 confirm: popupBoxConfirm, 
+                 cancel: popupBoxCancel
+               }
+            )}
+          </div>  
         </main>
       )
-
-//            <a id="game-button" onclick={() => {showPopupBox = (showPopupBox) ? false : true}}></a>
-//            {m(popupBox, {
-//                           open: showPopupBox, 
-//                           heading: "Journey into Nostalgia", 
-//                           body: body,
-//                           init: popupBoxInit,
-//                           cancelText: "Cancel", 
-//                           confirmText: "Confirm", 
-//                           confirm: popupBoxConfirm, 
-//                           cancel: popupBoxCancel
-//                         }
-//            )}
     }
   };
 }

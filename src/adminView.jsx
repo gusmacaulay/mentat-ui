@@ -12,17 +12,16 @@ function adminView(initialVnode) {
 
   return {
     view: function(vnode) {
+
       switch(vnode.attrs.viewType) {
         case 'models':
-          // get model data
-          const modelData = scryUrbit('get-conversation', {bot: 'mentat', centag: 'chat', label: 'default'})
-          return (<div id="admin-view">{m(modelView)}</div>)
+          return (<div id="admin-view">{m(modelView, {botID: vnode.attrs.botID})}</div>)
         case 'compendium':
-          return (<div id="admin-view">{m(compendiumView)}</div>)
+          return (<div id="admin-view">{m(compendiumView, {botID: vnode.attrs.botID})}</div>)
         case 'context':
-          return (<div  id="admin-view">{m(contextView)}</div>)
+          return (<div  id="admin-view">{m(contextView, {botID: vnode.attrs.botID})}</div>)
         default:
-          return (<div id="admin-view">{m(modelView)}</div>)
+          return (<div id="admin-view">{m(modelView, {botID: vnode.attrs.botID})}</div>)
       }
     }
   }

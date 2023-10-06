@@ -8,27 +8,31 @@ import _ from 'lodash';
 
 
 export async function scryUrbit(path, params) {
-  m.request({
+  const response = await m.request({
     method: "GET",
     url: "../../~/scry/mentat/" + path,
     params: params,
     //or...
     // body: params,
-    //url: "../../~/scry/dukebox/bundle/"+TheGame().title.toLowerCase()+".mime",
     responseType: "json",
   })
-  .then(async function(response) {
-    alert("response is: " + response);
-    console.log("response is: " + response);
 
-//    if (response.byteLength == 0) {
-//      //  4. No bundle exists
-//      console.log("[Dukebox] title not found.  Poking for bundle.");
-//
-//      //start twizzler here
-//      document.getElementById("twizzler").style.visibility = "visible";
-//    }
-  })
+  return response;
+  //return JSON.stringify(response)
+//  
+//  m.request({
+//    method: "GET",
+//    url: "../../~/scry/mentat/" + path,
+//    params: params,
+//    //or...
+//    // body: params,
+//    responseType: "json",
+//  })
+//  .then(async function(response) {
+//    alert("response is: " + JSON.stringify(response));
+//    console.log("response is: " + JSON.stringify(response));
+//    return JSON.stringify(response);
+//  })
 }
 
 
