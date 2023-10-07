@@ -31,9 +31,11 @@ function sidebar(initialVnode) {
                 <div className={(key == vnode.attrs.selectedItem) ? "selected sidebarItemBoxHeader" : "sidebarItemBoxHeader"}>
                   {key} 
                 </div>
-                <div className="sidebarItemBoxContent">
-                  {/*vnode.attrs.contentObj[key]["model-id"]*/}
-                </div>
+                {vnode.attrs.contentObj[key].map((item) => {return (
+                  <div className="sidebarItemBoxContent">
+                    <a>• {item}</a>
+                  </div>)}
+                )}
               </div>}
             </div>
           )})}

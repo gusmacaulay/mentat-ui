@@ -630,9 +630,10 @@ h4 {
 }
 
 .sidebarItemBox {
+  position: relative;
   left: 10%;
   width: 80%;
-  height: 7vh;
+  height: auto;
   border: 1px solid white;
 }
 
@@ -641,15 +642,17 @@ h4 {
 }
 
 .sidebarItemBoxHeader {
-  text-align: centre;
-  font-size: 3vh;
+	text-align: centre;
+	font-size: 3vh;
+	height: 5vh;
+	line-height: 5vh;
+	padding-left: 1vw;
 }
 
 .sidebarItemBoxContent {
-  top: 4vh;
-  left: 1vw;
+  font-size: 1rem;
+  padding-left: 3vw;
   text-align: left;
-  font-size: 1.5rem;
 }
 
 #content-box .content {

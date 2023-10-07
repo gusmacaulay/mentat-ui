@@ -5,7 +5,8 @@ import { scryUrbit, pokeUrbit } from './urbitFunctions';
 import { sidebar } from './sidebar';
 import { contentbox } from './contentbox';
 
-const models = stream({})
+const models = stream({});
+const modelsOutline = stream({});
 const selectedModel = stream(undefined); 
 const selectedModelKey = stream("");
 const currentBot = stream();
@@ -15,18 +16,19 @@ const getModels = () => {
 
   const url = 'get-models/' + currentBot() + '.json';
   scryUrbit(url).then((value) => {
-    // scry returns {"key": [{"key": {val}, {"key": {val}, ...}}]}
-    // remove outer key and convert to: {{"key": {val}, {"key": {val},...}}} i.e. obj not array
-
     const dataArray = value['get-models'];  // [{key: obj}, {key: obj}]
-    const dataObj = {}
+    const modelSummary = {};
+    const modelFull = {};
+
     dataArray.forEach((i) => {
-      const key = Object.keys(i)[0]
-      const value = Object.values(i)[0]
-      dataObj[key] = value;
+      const key = Object.keys(i)[0];
+      const value = Object.values(i)[0]["model-id"];      // send model-id only as data for sidebar     
+      modelSummary[key] = [value]                         // Array for consistency, needed in sidebar
+      modelFull[key] = Object.values(i)[0]                // full inference-model for contentbox
     })
 
-    models(dataObj)
+    modelsOutline(modelSummary)
+    models(modelFull)
   });
 }
 
@@ -58,7 +60,7 @@ function modelView(initialVnode) {
           {m(sidebar, {
                          heading: "Models",
                          botID: vnode.attrs.botID,
-                         contentObj: models(),
+                         contentObj: modelsOutline(),
                          itemAction: sidebarItemClick,
                          selectedItem: selectedModelKey()
                         }
