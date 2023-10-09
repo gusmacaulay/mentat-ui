@@ -631,14 +631,13 @@ h4 {
 
 .sidebarItemBox {
   position: relative;
-  left: 10%;
-  width: 80%;
+  left: 5%;
+  width: 90%;
   height: auto;
   border: 1px solid white;
-}
-
-.sidebarItemBox:hover {
-  cursor: pointer;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 5px;
 }
 
 .sidebarItemBoxHeader {
@@ -646,26 +645,35 @@ h4 {
 	font-size: 3vh;
 	height: 5vh;
 	line-height: 5vh;
-	padding-left: 1vw;
+	padding-left: 0.5vw;
 }
 
 .sidebarItemBoxContent {
   font-size: 1rem;
-  padding-left: 3vw;
+  padding-left: 1.5vw;
   text-align: left;
+  overflow-wrap: anywhere;
+}
+
+.sidebarItemBoxContent:hover {
+  background-color: #3e8e41;
+  cursor: pointer;
 }
 
 #content-box .content {
 	position: relative;
 	top: 7vh;
-	width: 80%;
-	left: 10%;
-	height: calc(80% - 14vh);
-} 
+	width: 90%;
+	left: 5%;
+	height: calc(80% - 7vh);
+  border: 1px white solid;
+	display: block;
+}
 
 #content-box .contentEntries {
   padding: 2px;
-  overflow: auto
+  overflow: auto;
+  border-bottom: 2px solid white;
 }
 
 #content-box .contentEntry {
@@ -673,11 +681,20 @@ h4 {
   position: 
 }
 
+.contentBox {
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+}
+
 #contentBoxButtons {
-  position: relative;
+	position: absolute;
 	width: 80%;
 	text-align: center;
 	height: 7vh;
+	display: block;
+	width: 25%;
+	bottom: 0px;
 }
 
 #contentBoxButtons a {

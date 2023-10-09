@@ -7,34 +7,33 @@ import { contentbox } from './contentbox';
 
 const models = stream({});
 const modelsOutline = stream({});
-const selectedModel = stream(undefined); 
-const selectedModelKey = stream("");
+const selectedModel = stream([]); 
 const currentBot = stream();
+
+const selectedCentag = stream("");
+const selectedLabel = stream("");
 
 const getModels = () => {
   if (!currentBot()) {return true};
 
   const url = 'get-models/' + currentBot() + '.json';
   scryUrbit(url).then((value) => {
-    const dataArray = value['get-models'];  // [{key: obj}, {key: obj}]
-    const modelSummary = {};
-    const modelFull = {};
+    const dataObj = value['get-models'];  // {chat: {default: {model}, blah: {model}, ...}, query: {default: {model}}}
 
-    dataArray.forEach((i) => {
-      const key = Object.keys(i)[0];
-      const value = Object.values(i)[0]["model-id"];      // send model-id only as data for sidebar     
-      modelSummary[key] = [value]                         // Array for consistency, needed in sidebar
-      modelFull[key] = Object.values(i)[0]                // full inference-model for contentbox
-    })
+    // Summarise data for sidebar by removing model details
+    const modelSummary = Object.fromEntries(
+      Object.entries(dataObj).map(([key, value]) => [key, Object.keys(value)])
+    )
 
-    modelsOutline(modelSummary)
-    models(modelFull)
+    modelsOutline(modelSummary);
+    models(dataObj);
   });
 }
 
-const sidebarItemClick = (event, modelKey) => {
-  selectedModelKey(modelKey)
-  selectedModel(models()[modelKey])
+const sidebarItemClick = (event, centag, label) => {
+  selectedCentag(centag);
+  selectedLabel(label);
+  selectedModel([models()[centag][label]]);  //return an array for consistency in contentbox
 }
 
 const contentEditItem = (objModel) => {
@@ -61,14 +60,18 @@ function modelView(initialVnode) {
                          heading: "Models",
                          botID: vnode.attrs.botID,
                          contentObj: modelsOutline(),
-                         itemAction: sidebarItemClick,
-                         selectedItem: selectedModelKey()
+                         itemAction: () => {return true},
+                         subItemAction: sidebarItemClick,
+                         selectedItem: selectedCentag(),
+                         selectedSubItem: selectedLabel()
                         }
           )}
           {m(contentbox, {
                            heading: "Models",
-                           contentObj: selectedModel(),
-                           itemAction: contentEditItem
+                           subHeading: selectedCentag() + " => " + selectedLabel(),
+                           contentArr: selectedModel(),
+                           itemAction: contentEditItem,
+                           buttons: true
           })}
         </div>
       )

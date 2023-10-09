@@ -32,8 +32,9 @@ function sidebar(initialVnode) {
                   {key} 
                 </div>
                 {vnode.attrs.contentObj[key].map((item) => {return (
-                  <div className="sidebarItemBoxContent">
-                    <a>• {item}</a>
+                  <div className={(key == vnode.attrs.selectedItem && item == vnode.attrs.selectedSubItem) ? "selected sidebarItemBoxContent" : "sidebarItemBoxContent"} 
+                       onclick={(ev) => {return vnode.attrs.subItemAction(ev, key, item)}}>
+                    <a>{"•" + item}</a>
                   </div>)}
                 )}
               </div>}
