@@ -32,11 +32,10 @@ export async function pokeUrbit(mark, params) {
 
 export async function updateBots() {
   scryUrbit('get-bots-set.json').then((value) => {
-    alert('bots array is: ' + JSON.stringify(value));
     if(value['get-bots-set'] === null) {
       // if required
     } else {
-      botsArray(value['get-bots-set'])
+      botsObj(value['get-bots-set'])
       // set initial bot view (don't change?)
       // botID(botsArray()[0]);
     }

@@ -785,7 +785,6 @@ h4 {
 	border: 1px white solid;
 	height: 50vh;
 	background-color: black;
-	/* text-align: center; */
 	padding: 2vw;
 }
 
@@ -841,4 +840,68 @@ h4 {
 
 .visible {
   overflow: visible;
+}
+
+#botDriver {
+  position: relative;
+	top: 20vh;
+	left: 20vw;
+	width: 50vw;
+	border: 1px white solid;
+	height: 50vh;
+	background-color: black;
+	padding: 2vw;
+}
+
+.botContent {
+  width: 100%;
+  border: 1px solid white;
+  height: calc(100% - 6rem);
+  margin-top: 2rem;
+  overflow-y: auto;
+}
+
+.botListItem {
+  padding: 1rem;
+}
+
+.botLabel {
+  display: inline-block;
+  width: 10rem;
+}
+
+.botButton {
+  display: inline-block;
+  width: 10rem;
+  border: 1px solid white;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.botOn {
+  background-color: #04aa6d;
+  text-align: right;
+}
+
+.botOff {
+  background-color: crimson;
+  text-align: left;
+}
+
+.botDriverButtons {
+  height: 3rem;
+  line-height: 3rem;
+  text-align: center;
+}
+
+.botDriverButtons a {
+  height: 2rem;
+  padding: 0.3rem;
+  border: 1px solid white;
+}
+
+.botDriverButtons a:hover {
+  background-color: #04aa6d;
 }

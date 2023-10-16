@@ -2,18 +2,24 @@ import m from 'mithril';
 import stream from 'mithril/stream';
 import Urbit from '@urbit/http-api';
 
-import { urb, botsArray, botID } from './allStreams';
+import { urb, botsObj, botID } from './allStreams';
 import { popupBox } from './popupBox';
+import { botDriver } from './botDriver';
 import { adminView } from './adminView';
 
 import { scryUrbit, pokeUrbit } from './urbitFunctions';
 
 var showPopupBox = false;
+var showBotDriver = false;
 
 var viewType = stream('model')
 
 
 function App(initialVnode) {
+
+  async function closeBotDriver() {
+    showBotDriver = false
+  }
 
   async function popupBoxInit() {
     return true;
@@ -27,9 +33,6 @@ function App(initialVnode) {
     showPopupBox = false;
   }
 
-  const body = () => {return (
-    <a>Each bot will run as a separate %gato thread, with its own models, chat history, and context windows.</a>
-  )}
 
   return {
     oninit: () => {
@@ -38,9 +41,9 @@ function App(initialVnode) {
         if(value['get-bots-set'] === null) {
           // TODO...
         } else {
-          botsArray(value['get-bots-set'])
+          botsObj(value['get-bots-set'])  // {{bot-id: status}, {bot-id: status}, ...}
           // set initial bot view
-          botID(botsArray()[0]);
+          botID(Object.keys(botsObj())[0])
         }
       });
     },  
@@ -64,11 +67,11 @@ function App(initialVnode) {
             <div class="dropdown">
               <button class="dropbtn">bot</button>
               <div id="botSelector" class="dropdown-content">
-                {botsArray().map((el) => {return (
-                  <a onclick={() => {botID(el)}}>{el}</a>
+               {Object.keys(botsObj()).map((key) => {return (
+                  <a onclick={() => {botID(key)}}>{key}</a>
                 )})}
                 <hr></hr>
-                <a onclick={() => {showPopupBox = (showPopupBox) ? false : true}}>Start|Stop</a>
+                <a onclick={() => {showBotDriver = true}}>Start|Stop</a>
               </div>
             </div>
           </div>
@@ -76,22 +79,22 @@ function App(initialVnode) {
             {m(adminView, {viewType: viewType(), botID: botID()})}
           </div>
           <div>
-            {m(popupBox, {
-                 open: showPopupBox, 
-                 heading: "Bot Control", 
-                 body: body,
-                 init: popupBoxInit,
-                 cancelText: "Cancel", 
-                 confirmText: "Confirm", 
-                 confirm: popupBoxConfirm, 
-                 cancel: popupBoxCancel
-               }
-            )}
+            {m(botDriver, {
+                open: showBotDriver,
+                close: closeBotDriver,
+                addHeading: "Bot Control"
+            })}
           </div>  
         </main>
       )
     }
   };
 }
+/*
+<div id="botSelector" class="dropdown-content">
+{botsArray().map((el) => {return (
+  <a onclick={() => {botID(el)}}>{el}</a>
+)})}
+*/
 
 export { App };
