@@ -660,6 +660,12 @@ h4 {
   cursor: pointer;
 }
 
+.contentBox {
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+}
+
 #content-box .content {
 	position: relative;
 	top: 7vh;
@@ -674,17 +680,41 @@ h4 {
   padding: 2px;
   overflow: auto;
   border-bottom: 2px solid white;
+  position: relative;
 }
 
 #content-box .contentEntry {
   font-size: 1.5rem;
-  position: 
+  position: relative;
+  left: 2rem;
+  width: calc(100% - 2rem);
 }
 
-.contentBox {
-  height: 100%;
-  width: 100%;
-  overflow-y: auto;
+.contentEntry .key {
+  position: relative;
+  display: inline-block;
+  width: 15%;
+  vertical-align: top;
+}
+
+.contentEntry .value {
+  position: relative;
+  display: inline-block;
+  width: 80%;
+}
+
+#edit-button {
+	position: absolute;
+	right: 1vw;
+	bottom: 1vh;
+	font-size: 1.25rem;
+  padding: 0.25rem;
+}
+
+#edit-button:hover {
+  cursor: pointer;
+  background-color: #3e8e41;
+  border: 1px solid white;
 }
 
 #contentBoxButtons {
@@ -735,4 +765,80 @@ h4 {
 .add:hover {
   cursor: pointer;
   background-color: #3e8e41;
+}
+
+.overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(50, 50, 50, 0.75);
+  z-index: 9;
+}
+
+#editBox {
+	position: relative;
+	top: 20vh;
+	left: 20vw;
+	width: 50vw;
+	border: 1px white solid;
+	height: 50vh;
+	background-color: black;
+	/* text-align: center; */
+	padding: 2vw;
+}
+
+.editContent {
+	height: calc(100% - 12vh);
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	padding-top: 5vh;
+	overflow-y: auto;
+}
+
+.editEntry label {
+	width: 8vw;
+	display: inline-block;
+	padding-left: 0;
+	text-align: right;
+	padding-right: 1vw;
+  margin-bottom: 3vh;
+}
+
+.editEntry input {
+  width: 35vw;
+  display: inline-block;
+}
+
+.editButtons {
+	width: 100%;
+	text-align: center;
+	margin-top: 2vh;
+}
+
+.editButtons a {
+	border: 1px solid white;
+	padding: 1vh;
+	margin-left: 1vh;
+	margin-right: 1vh;
+}
+
+.editButtons a:hover {
+  cursor: pointer;
+  background-color: #3e8e41;
+}
+
+.editSubEntry {
+  padding-left: 3rem;
+}
+
+.editSubEntry input {
+  width: calc(35vw - 3rem);
+  display: inline-block;
+}
+
+.visible {
+  overflow: visible;
 }

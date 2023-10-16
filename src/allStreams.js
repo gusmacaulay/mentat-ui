@@ -9,6 +9,7 @@ export const TheShip = stream(window.ship);
 export const TheSigil = stream("");
 
 export const botID = stream("");
+export const botsArray = stream([])
 
 // To allow msgBox to be used with Urbit callbacks
 export const msgBoxCallback = stream({

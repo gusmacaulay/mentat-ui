@@ -1,14 +1,14 @@
 import m from 'mithril';
 import stream from 'mithril/stream';
 
-import { scryUrbit, pokeUrbit } from './urbitFunctions';
+import { scryUrbit, pokeUrbit, updateBots } from './urbitFunctions';
 import { sidebar } from './sidebar';
 import { contentbox } from './contentbox';
 
 const models = stream({});
 const modelsOutline = stream({});
 const selectedModel = stream([]); 
-const currentBot = stream();
+const currentBot = stream("");
 
 const selectedCentag = stream("");
 const selectedLabel = stream("");
@@ -27,6 +27,12 @@ const getModels = () => {
 
     modelsOutline(modelSummary);
     models(dataObj);
+
+    // Redraw contentbox if already being displayed
+    if(selectedCentag() && selectedModel()) {
+      sidebarItemClick(null, selectedCentag(), selectedLabel())
+    }
+
   });
 }
 
@@ -36,10 +42,34 @@ const sidebarItemClick = (event, centag, label) => {
   selectedModel([models()[centag][label]]);  //return an array for consistency in contentbox
 }
 
-const contentEditItem = (objModel) => {
-  // take in some object data and send out a poke
-  alert("Edit click")
+const editModel = (event, modelObj) => {
+  const updModel = {'add-model': {'bot-id': currentBot(),
+                    'centag': selectedCentag(),
+                    'label': selectedLabel(),
+                    'inference-model': modelObj}};
+
+  pokeUrbit('mentat-action', updModel);
+  getModels();  // refresh data
 }
+
+const addModel = (event, modelObj) => {
+  const addModel = {'add-model': modelObj};
+  pokeUrbit('mentat-action', addModel);
+  // do we need this here as well??
+  // Yes, but this won't do it - need to get bots in case a new bot has been added
+  updateBots().then(getModels());  // refresh data
+}
+
+const modelShape = {'bot-id': '',
+                    'centag': '',
+                    'label': '',
+                    'inference-model': {
+                       'view': '',
+                       'model-id': '',
+                       'api-key': '',
+                       'timeout': 0,
+                       'tokens': 0
+                    }};
 
 function modelView(initialVnode) {
 
@@ -59,6 +89,9 @@ function modelView(initialVnode) {
           {m(sidebar, {
                          heading: "Models",
                          botID: vnode.attrs.botID,
+                         addHeading: "Add a model",
+                         addItem: addModel,
+                         addObjShape: modelShape,
                          contentObj: modelsOutline(),
                          itemAction: () => {return true},
                          subItemAction: sidebarItemClick,
@@ -70,7 +103,7 @@ function modelView(initialVnode) {
                            heading: "Models",
                            subHeading: selectedCentag() + " => " + selectedLabel(),
                            contentArr: selectedModel(),
-                           itemAction: contentEditItem,
+                           itemAction: editModel,
                            buttons: true
           })}
         </div>

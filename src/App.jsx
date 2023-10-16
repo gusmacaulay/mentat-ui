@@ -2,13 +2,11 @@ import m from 'mithril';
 import stream from 'mithril/stream';
 import Urbit from '@urbit/http-api';
 
-import { urb, botID } from './allStreams';
+import { urb, botsArray, botID } from './allStreams';
 import { popupBox } from './popupBox';
 import { adminView } from './adminView';
 
 import { scryUrbit, pokeUrbit } from './urbitFunctions';
-
-const botsArray = stream([]) 
 
 var showPopupBox = false;
 
@@ -36,9 +34,14 @@ function App(initialVnode) {
   return {
     oninit: () => {
       scryUrbit('get-bots-set.json').then((value) => {
-        botsArray(value['get-bots-set'])
-        // set initial bot view
-        botID(botsArray()[0]);
+        alert('bots array is: ' + JSON.stringify(value));
+        if(value['get-bots-set'] === null) {
+          // TODO...
+        } else {
+          botsArray(value['get-bots-set'])
+          // set initial bot view
+          botID(botsArray()[0]);
+        }
       });
     },  
     onupdate: () => {},  
@@ -65,7 +68,7 @@ function App(initialVnode) {
                   <a onclick={() => {botID(el)}}>{el}</a>
                 )})}
                 <hr></hr>
-                <a onclick={() => {showPopupBox = (showPopupBox) ? false : true}}>Make a new bot</a>
+                <a onclick={() => {showPopupBox = (showPopupBox) ? false : true}}>Start|Stop</a>
               </div>
             </div>
           </div>
@@ -75,7 +78,7 @@ function App(initialVnode) {
           <div>
             {m(popupBox, {
                  open: showPopupBox, 
-                 heading: "Bot Setup", 
+                 heading: "Bot Control", 
                  body: body,
                  init: popupBoxInit,
                  cancelText: "Cancel", 

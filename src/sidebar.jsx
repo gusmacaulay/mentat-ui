@@ -1,30 +1,30 @@
 import m from 'mithril';
 import stream from 'mithril/stream';
 
-//import { botID } from './allStreams';
+const adding = stream(false);
+const returnObj = stream({});
 
 
 // sidebar for model, compendium, and context screens
 
 function sidebar(initialVnode) {
-  const add = () => {
-    // Use a popup here to get inputs?  Or open an input in the main window?
-    alert("adding a thing")
-  }
 
   return {
     view: function(vnode) {
       
+      // addItem needs to trigger the popup in the contentbox??
+      // just duplicate it here!
+
       return (
         <div id="sidebar">
-         <div className="heading sidebar-heading">
-          <h3 className="text-align-centre">{vnode.attrs.heading}</h3>
-          <a className="add" onclick={() => add()}>+</a>
-         </div>
-         <div className="heading sidebar-subheading">
-          <h2 className="text-align-centre">Selected bot: {vnode.attrs.botID}</h2>
-         </div>
-         <div className="content">
+          <div className="heading sidebar-heading">
+            <h3 className="text-align-centre">{vnode.attrs.heading}</h3>
+            <a className="add" onclick={() => {adding(true)}}>+</a>
+          </div>
+          <div className="heading sidebar-subheading">
+            <h2 className="text-align-centre">Selected bot: {vnode.attrs.botID}</h2>
+          </div>
+          <div className="content">
           {Object.keys(vnode.attrs.contentObj).map((key) => {return (
             <div className="sidebarItemBox" onclick={(event) => {return vnode.attrs.itemAction(event, key)}}>{
               <div>
@@ -40,8 +40,46 @@ function sidebar(initialVnode) {
               </div>}
             </div>
           )})}
+          </div>
+
+          {(!adding()) ? null :
+          <div class="overlay">
+            <div id="editBox">
+              <h4 className="text-align-centre">{vnode.attrs.addHeading}</h4>
+              <div className="editContent">
+                {Object.entries(vnode.attrs.addObjShape).map(([key, value]) => {
+                  return ((typeof value === 'object') ? 
+                            <div className="editEntry">
+                                {Object.entries(value).map(([subKey, subVal]) => {
+                                  return (
+                                    <div className="editSubEntry">
+                                      <label for={subKey}>{subKey}: </label>
+                                      <input id={subKey} name={subKey} placeholder={subVal} oninput={(e) => {
+                                        const newObj = {};
+                                        newObj[subKey] = e.target.value;
+                                        returnObj()[key] = {...returnObj()[key], ...newObj}
+                                      }}></input>
+                                    </div>
+                                  )
+                                })}
+                              </div>
+                            :
+                            <div className="editEntry">
+                              <label for={key}>{key}: </label>
+                              <input id={key} name={key} placeholder={value} oninput={(e) => {returnObj()[key] = e.target.value}}></input>
+                            </div>
+                          )
+                })}
+              </div>
+              <div className="editButtons">
+                <a id="confirm" onclick={(e) => {vnode.attrs.addItem(e, {...vnode.attrs.addObjShape, ...returnObj()}); adding(false);}}>Confirm</a>
+                <a id="cancel" onclick={(e) => {cancelAdd(e)}}>Cancel</a>
+              </div>
+            </div>
+          </div>
+          }
+
         </div>
-      </div>
       )
     }
   }

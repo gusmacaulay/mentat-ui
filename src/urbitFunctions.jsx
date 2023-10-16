@@ -2,10 +2,9 @@ import m from 'mithril';
 import stream from 'mithril/stream';
 import Urbit from '@urbit/http-api';
 
-import { popupBox } from './popupBox';
+import { urb, botsArray, botID } from './allStreams';
 
 import _ from 'lodash';
-
 
 export async function scryUrbit(path, params) {
   const response = await m.request({
@@ -18,31 +17,28 @@ export async function scryUrbit(path, params) {
   })
 
   return response;
-  //return JSON.stringify(response)
-//  
-//  m.request({
-//    method: "GET",
-//    url: "../../~/scry/mentat/" + path,
-//    params: params,
-//    //or...
-//    // body: params,
-//    responseType: "json",
-//  })
-//  .then(async function(response) {
-//    alert("response is: " + JSON.stringify(response));
-//    console.log("response is: " + JSON.stringify(response));
-//    return JSON.stringify(response);
-//  })
 }
 
-
 export async function pokeUrbit(mark, params) {
-  //  Poke urbit for game
+  //  Poke urbit at mentat app
   await urb().poke({
     app: 'mentat',
-    onSuccess: () => {},
+    onSuccess: (msg) => {console.log("[mentat] Successful update " + msg)},
     onError: (msg) => {console.error("[mentat] Error: " + msg)},
     mark: mark,
     json: params,
+  });
+}
+
+export async function updateBots() {
+  scryUrbit('get-bots-set.json').then((value) => {
+    alert('bots array is: ' + JSON.stringify(value));
+    if(value['get-bots-set'] === null) {
+      // if required
+    } else {
+      botsArray(value['get-bots-set'])
+      // set initial bot view (don't change?)
+      // botID(botsArray()[0]);
+    }
   });
 }
