@@ -19,7 +19,11 @@ function sidebar(initialVnode) {
         <div id="sidebar">
           <div className="heading sidebar-heading">
             <h3 className="text-align-centre">{vnode.attrs.heading}</h3>
-            <a className="add" onclick={() => {adding(true)}}>+</a>
+            {(vnode.attrs.add) ?
+              <a className="add" onclick={() => {adding(true)}}>+</a>
+            : 
+              null
+            }
           </div>
           <div className="heading sidebar-subheading">
             <h2 className="text-align-centre">Selected bot: {vnode.attrs.botID}</h2>
@@ -34,7 +38,7 @@ function sidebar(initialVnode) {
                 {vnode.attrs.contentObj[key].map((item) => {return (
                   <div className={(key == vnode.attrs.selectedItem && item == vnode.attrs.selectedSubItem) ? "selected sidebarItemBoxContent" : "sidebarItemBoxContent"} 
                        onclick={(ev) => {return vnode.attrs.subItemAction(ev, key, item)}}>
-                    <a>{"•" + item}</a>
+                    <a>{"• " + item}</a>
                   </div>)}
                 )}
               </div>}
@@ -73,7 +77,7 @@ function sidebar(initialVnode) {
               </div>
               <div className="editButtons">
                 <a id="confirm" onclick={(e) => {vnode.attrs.addItem(e, {...vnode.attrs.addObjShape, ...returnObj()}); adding(false);}}>Confirm</a>
-                <a id="cancel" onclick={(e) => {cancelAdd(e)}}>Cancel</a>
+                <a id="cancel" onclick={(e) => {returnObj({}); adding(false);}}>Cancel</a>
               </div>
             </div>
           </div>

@@ -313,12 +313,13 @@ h4 {
   top: 0;
   background-color: darkslategray;
   color: white;
+  overflow: clip;
 }
 
 #header-container {
   position: absolute;
   top: 0vh;
-  height: 10vh;
+  height: 7vh;
   width: 100vw;
   border: 1px white solid;
   background-color: black;
@@ -518,14 +519,13 @@ h4 {
 #admin-heading {
   position: absolute;
   width: fit-content;
-  height: 10vh;
+  height: 7vh;
   padding: 0;
   margin: 0;
-  vertical-align: middle;
   display: inline;
-  font-size: 5vh;
-  left: 45%;
-  top: 20%;
+  font-size: 2rem;
+  left: 40%;
+  line-height: 7vh;
 }
 
 #content-box {
@@ -544,8 +544,8 @@ h4 {
   position: relative;
   background-color: #04AA6D;
   color: white;
-  height: calc(10vh - 2px);
-  width: 10vh;
+  height: calc(7vh - 2px);
+  width: 7vh;
   border: none;
   left: 0;
   border-right: 1px solid white;
@@ -555,6 +555,7 @@ h4 {
 .dropdown {
   position: relative;
   display: inline-block;
+  vertical-align: top;
 }
 
 /* Dropdown Content (Hidden by Default) */
@@ -600,24 +601,28 @@ h4 {
 .sidebar-heading {
   position: relative;
   border-bottom: 1px solid white;
-  height: 5vh;
+  height: 2rem;
 }
 
 .sidebar-heading h3 {
   position: relative;
   display: inline-block;
-  width: calc(100% - 5vh); 
+  width: calc(100% - 2rem);
+  font-size: 1.6rem;
+  line-height: 2rem;
+  padding-top: 0.1rem; 
 }
 
 .sidebar-subheading {
-  height: 5vh;
+  height: 3rem;
 }
 
 .sidebar-subheading h2 {
   margin: 0;
   padding: 0;
   border: none;
-  font-size: 3vh;
+  font-size: 1.5rem;
+  line-height: 3rem;
 }
 
 #sidebar .content {
@@ -642,15 +647,15 @@ h4 {
 
 .sidebarItemBoxHeader {
 	text-align: centre;
-	font-size: 3vh;
-	height: 5vh;
-	line-height: 5vh;
+	font-size: 1.5rem;
+	height: 3rem;
+	line-height: 3rem;
 	padding-left: 0.5vw;
 }
 
 .sidebarItemBoxContent {
-  font-size: 1rem;
-  padding-left: 1.5vw;
+  font-size: 1.2rem;
+  padding-left: 3.5rem;
   text-align: left;
   overflow-wrap: anywhere;
 }
@@ -666,6 +671,15 @@ h4 {
   overflow-y: auto;
 }
 
+#content-box h3 {
+  font-size: 1.6rem;
+  line-height: 3.5rem;
+}
+
+#content-box h4 {
+  font-weight: lighter;
+}
+
 #content-box .content {
 	position: relative;
 	top: 7vh;
@@ -677,7 +691,8 @@ h4 {
 }
 
 #content-box .contentEntries {
-  padding: 2px;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   overflow: auto;
   border-bottom: 2px solid white;
   position: relative;
@@ -688,6 +703,7 @@ h4 {
   position: relative;
   left: 2rem;
   width: calc(100% - 2rem);
+  margin-bottom: 3px;
 }
 
 .contentEntry .key {
@@ -753,13 +769,15 @@ h4 {
 	position: relative;
 	display: inline-block;
   background-color: #04AA6D;
-	width: 5vh;
-	height: 5vh;
+	width: 2rem;
+	height: 2rem;
 	border-left: 1px white solid;
 	text-align: center;
-	font-size: 4vh;
+	font-size: 1.8rem;
+  line-height: 2rem;
 	padding: 0;
   box-sizing: border-box;
+  vertical-align: top;
 }
 
 .add:hover {

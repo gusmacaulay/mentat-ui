@@ -96,7 +96,8 @@ function modelView(initialVnode) {
                          itemAction: () => {return true},
                          subItemAction: sidebarItemClick,
                          selectedItem: selectedCentag(),
-                         selectedSubItem: selectedLabel()
+                         selectedSubItem: selectedLabel(),
+                         add: true
                         }
           )}
           {m(contentbox, {
