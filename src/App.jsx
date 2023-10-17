@@ -37,7 +37,6 @@ function App(initialVnode) {
   return {
     oninit: () => {
       scryUrbit('get-bots-set.json').then((value) => {
-        alert('bots array is: ' + JSON.stringify(value));
         if(value['get-bots-set'] === null) {
           // TODO...
         } else {
