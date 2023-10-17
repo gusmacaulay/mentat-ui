@@ -1,16 +1,27 @@
 import m from 'mithril';
 
 import { botsObj, botID } from './allStreams';
+import { pokeUrbit, updateBots } from './urbitFunctions';
 
 // Bot driver - standalone
 
 function botDriver(initialVnode) {
 
   const botSwitch = (e, key) => {
-    alert("botsObj()[key] " + botsObj()[key]);
-    botsObj()[key] = (botsObj()[key] === "running") ? "stopped" : "running";
-    alert("switched to: " + botsObj()[key]);
-    //poke urbit
+    const currVal = botsObj()[key]
+    // set to waiting until urbit returns confirmed change
+    botsObj()[key] = "waiting";
+
+    // poke status change to Urbit
+    if (currVal === "running") {
+      const pokeData = {'stop-bot': {'bot-id': key}}
+      pokeUrbit('mentat-action', pokeData);
+      updateBots();
+    } else if (currVal === "stopped") {
+      const pokeData = {'start-bot': {'bot-id': key}}
+      pokeUrbit('mentat-action', pokeData);
+      updateBots();
+    }
   }
 
 
@@ -33,8 +44,8 @@ function botDriver(initialVnode) {
                 <div className="botListItem">
                   <a className="botLabel">{key}</a>
                   <a id={"botButton-" + key} 
-                    className={(val === "running") ? "botButton botOn" : "botButton botOff"} 
-                    onclick={(e) => {botSwitch(e, key)}}>{(val === "running") ? "ON" : "OFF"}</a>
+                    className={(val === "running") ? "botButton botOn" : (val === "stopped") ? "botButton botOff" : "botButton botWait"} 
+                    onclick={(e) => {botSwitch(e, key)}}>{(val === "running") ? "ON" : (val === "stopped") ? "OFF" : "...wait..."}</a>
                 </div>
               )})}
               </div>

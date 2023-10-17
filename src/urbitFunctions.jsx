@@ -2,7 +2,7 @@ import m from 'mithril';
 import stream from 'mithril/stream';
 import Urbit from '@urbit/http-api';
 
-import { urb, botsArray, botID } from './allStreams';
+import { urb, botsObj, botID } from './allStreams';
 
 import _ from 'lodash';
 
