@@ -43,6 +43,10 @@ const sidebarItemClick = (event, centag, label) => {
 }
 
 const editModel = (event, modelObj) => {
+  // force numbers to actually be be numbers
+  modelObj["timeout"] = parseInt(modelObj["timeout"])
+  modelObj["tokens"] = parseInt(modelObj["tokens"])
+
   const updModel = {'add-model': {'bot-id': currentBot(),
                     'centag': selectedCentag(),
                     'label': selectedLabel(),
@@ -53,6 +57,10 @@ const editModel = (event, modelObj) => {
 }
 
 const addModel = (event, modelObj) => {
+  // force numbers to actually be be numbers
+  modelObj["inference-model"]["timeout"] = parseInt(modelObj["inference-model"]["timeout"])
+  modelObj["inference-model"]["tokens"] = parseInt(modelObj["inference-model"]["tokens"])
+
   const addModel = {'add-model': modelObj};
   pokeUrbit('mentat-action', addModel);
   // do we need this here as well??
