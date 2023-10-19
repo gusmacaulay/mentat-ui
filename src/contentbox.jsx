@@ -37,10 +37,17 @@ function contentbox(initialVnode) {
                 return (
                   <div className="contentEntries">
                     {Object.entries(el).map(([key, value]) => {
-                      return (<div className="contentEntry">
-                                <a id={"entry-" + key} className="key">{key} : </a><a className="value">{value}</a>
-                              </div>)
-                    })}
+                      return (
+                        (key === "api-key") ?
+                          <div className="contentEntry">
+                            <a id={"entry-" + key} className="key">{key} : </a><a className="value">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</a>
+                          </div>
+                        :
+                          <div className="contentEntry">
+                            <a id={"entry-" + key} className="key">{key} : </a><a className="value">{value}</a>
+                          </div>
+                      )
+                    })}                                                                               
                     {(vnode.attrs.buttons) ? <a id="edit-button" onclick={(ev) => {editItem(ev, el)}}>Edit</a> : null}
                   </div>)
               })}

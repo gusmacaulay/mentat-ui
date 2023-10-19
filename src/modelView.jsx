@@ -68,15 +68,15 @@ const addModel = (event, modelObj) => {
   updateBots().then(getModels());  // refresh data
 }
 
-const modelShape = {'bot-id': '',
-                    'centag': '',
-                    'label': '',
+const modelShape = {'bot-id': '(e.g. mentat)',
+                    'centag': '(chat, img, query, note)',
+                    'label': 'default',
                     'inference-model': {
-                       'view': '',
+                       'view': 'private',
                        'model-id': '',
                        'api-key': '',
-                       'timeout': 0,
-                       'tokens': 0
+                       'timeout': 360,
+                       'tokens': 500
                     }};
 
 function modelView(initialVnode) {
