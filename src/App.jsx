@@ -4,6 +4,7 @@ import Urbit from '@urbit/http-api';
 
 import { urb, botsObj, botID } from './allStreams';
 import { popupBox } from './popupBox';
+import { helpBox } from './helpBox';
 import { botDriver } from './botDriver';
 import { adminView } from './adminView';
 
@@ -13,7 +14,7 @@ var showPopupBox = false;
 var showBotDriver = false;
 
 var viewType = stream('model')
-
+var showHelp = stream(false)
 
 function App(initialVnode) {
 
@@ -33,6 +34,9 @@ function App(initialVnode) {
     showPopupBox = false;
   }
 
+  async function closeHelpBox() {
+    showHelp(false);
+  }
 
   return {
     oninit: () => {
@@ -73,6 +77,9 @@ function App(initialVnode) {
                 <a onclick={() => {showBotDriver = true}}>Start|Stop</a>
               </div>
             </div>
+            <div class="dropdown">
+              <button class="dropbtn" onclick={() => {showHelp(true)}}>?</button>
+            </div>
           </div>
           <div id="body-container">
             {m(adminView, {viewType: viewType(), botID: botID()})}
@@ -84,16 +91,15 @@ function App(initialVnode) {
                 addHeading: "Bot Control"
             })}
           </div>  
+          <div>
+            {!(showHelp()) ? null :
+              m(helpBox, {close: closeHelpBox})
+            }
+          </div>
         </main>
       )
     }
   };
 }
-/*
-<div id="botSelector" class="dropdown-content">
-{botsArray().map((el) => {return (
-  <a onclick={() => {botID(el)}}>{el}</a>
-)})}
-*/
 
 export { App };

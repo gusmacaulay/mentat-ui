@@ -933,3 +933,62 @@ h4 {
 .botDriverButtons a:hover {
   background-color: #04aa6d;
 }
+
+#helpBox {
+	position: absolute;
+	background: black;
+	width: 60%;
+	left: 20%;
+	height: 80%;
+	top: 5%;
+	padding: 2rem;
+	overflow-y: auto;
+  border: 1px solid white;
+  text-align: left;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  color: lightgray;
+}
+
+#helpBox h3 h4 h5 {
+  padding-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+#helpBox h3 {
+  font-size: 2.25rem;
+}
+
+#helpBox h4 {
+  font-size: 2rem;
+}
+
+#helpBox h5 {
+  font-size: 1.75rem;
+}
+
+
+#helpBox div {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.helpbox-button {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  background-color: #04aa6d;
+  width: fit-content;
+  padding: 1rem;
+  border: 1px white solid;
+}
+
+.helpbox-button hover {
+  background-color: #3e8e41;
+  cursor: pointer;
+}
+
+.tab {
+  position: relative;
+  left: 3%;
+}
