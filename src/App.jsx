@@ -3,6 +3,7 @@ import stream from 'mithril/stream';
 import Urbit from '@urbit/http-api';
 
 import { urb, botsObj, botID } from './allStreams';
+import { getCookie, setCookie } from './helperFunctions';
 import { popupBox } from './popupBox';
 import { helpBox } from './helpBox';
 import { botDriver } from './botDriver';
@@ -35,11 +36,17 @@ function App(initialVnode) {
   }
 
   async function closeHelpBox() {
+    setCookie("help");
     showHelp(false);
   }
 
   return {
     oninit: () => {
+      // check cookies
+      const help = (!(getCookie("help")) || getCookie("help") === undefined || getCookie("help") === null) ? true : false;
+      showHelp(help);
+
+      // scry urbit for data
       scryUrbit('get-bots-set.json').then((value) => {
         if(value['get-bots-set'] === null) {
           // TODO...
