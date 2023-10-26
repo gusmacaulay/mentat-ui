@@ -69,7 +69,7 @@ const addModel = (event, modelObj) => {
 }
 
 const modelShape = {'bot-id': '(e.g. mentat)',
-                    'centag': '(chat, img, query, todo)',
+                    'centag': '(chat, img, query, todo, remind)',
                     'label': 'default',
                     'inference-model': {
                        'view': 'private',

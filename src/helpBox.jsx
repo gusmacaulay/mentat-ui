@@ -17,9 +17,8 @@ function helpBox(initialVnode) {
                   <h4 className="text-align-centre">Summary</h4>
                   <div>
                   <a>%mentat is an interface to a selection of LLMs from replicate.com.
-                    It currently supports queries, chat, image generation, and todo list management.  
-                    Message notifications, image generation for %turf, and counter-prompted reminders are
-                    coming soon!
+                    It currently supports queries, chat, image generation (%turf integration soon!), 
+                    todo list management, and reminders (message notifications also coming soon).  
                   </a>
                   </div>
                   <div>
@@ -27,7 +26,7 @@ function helpBox(initialVnode) {
                   </a>
                   </div>
                   <div>
-                  <a>%mentat uses %gato to watch Groups Chats, Silo to store images and outputs
+                  <a>%mentat uses %gato to watch Groups Chats, Silo to store images, and outputs
                     all its todo lists to Notebooks.  While the image generation will work without
                     Silo, %gato is a dependency.
                   </a>
@@ -49,6 +48,9 @@ function helpBox(initialVnode) {
                   <div>
                   <a className="tab">/mentat %todo Please add 'pick up Hackathon merch' to my list</a>
                   </div>               
+                  <div>
+                  <a className="tab">/mentat %remind Remind me in five minutes to take a break</a>
+                  </div>               
                 </div>
                 <div>
                   <h4 className="text-align-centre">Using %mentat</h4>
@@ -56,7 +58,7 @@ function helpBox(initialVnode) {
                     so you can use it right out of the box.  To set it up for yourself, you can simply update the 
                     api-key with your replicate.com api-key and leave the models the way they are (probably best, there's
                     a lot going on under the hood).  Or if you want to play around with it, you can set up your preferred
-                    replicate.com models to run for each centag (%img, %todo %query, %chat).
+                    replicate.com models to run for each centag (%img, %todo %query, %chat, %remind).
                   </a>
                 </div>
                 <div>
