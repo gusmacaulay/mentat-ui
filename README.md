@@ -12,7 +12,7 @@ You can find models to use at https://replicate.com/
 
 ## Quick install
 
-Install %mentat and %mentat-ui from ...
+Install %mentat and %mentat-ui from `~tagrev-lacmur-lomped-firser/mentat`
 
 
 ## Urbit, Vite, and Mithril
@@ -57,13 +57,13 @@ To set up a %mentat bot open the UI and click the `+` next to 'Models', this wil
 consequently a new bot - no model, no bot).
 
 Fill in the fields on the 'Add a model' screen as follows:
-* bot-id   - this is the message tag that %gato looks for in the chat.  If you have 'mentat' as your bot-id
+* bot-id   - this is the message tag that %gato looks for in the chat.  If you have `mentat` as your bot-id
              then %gato will read any messages that you start with `/mentat`
 * centag   - this tags this particular model so that it runs with the correct child thread.  For example an
              image generation model would be tagged with `img` and a chat model with `chat`.  Currently valid
-             tags are `img`, `query`, `chat`, and `todo` - more options are coming soon!
+             tags are `img`, `query`, `chat`, `todo` and `remind` - more options coming soon!
 * label    - in future labels will enable further breakdown of models (e.g. separate conversation threads under
-             the one bot).  For now, always set this to 'default'
+             the one bot).  For now, always set this to `default`
 * view     - `public` or `private` depending on whether you want everyone to be able to access your bot, or
              only the ship running it.
 * model-id - alphanumeric model-id from replicate.com
